@@ -1,0 +1,21 @@
+Pyinstaller is kinda nasty with pyqt, so some options are needed:
+First comes the command for debugging:
+
+pyinstaller.exe -d -c --hidden-import PyQt5.sip --clean -y --add-data "QT;QT" main.py
+then run with cmd /K main.exe for debugging output
+
+Explanation:
+-d: means develop and outputs everything
+-c: opens the console to read the output
+--hidden-import PyQt.sip: includes PyQt stuff that is not detected automatically
+--clean: deletes all old build data
+-y: confirms everything mainly overwriting old stuff in debug dir
+--add-data "QT;QT": is needed to provide all *.ui files and all other data to the executable
+main.py: is the application entry point to compile
+
+and now the command for deployment build:
+pyinstaller.exe --onefile --windowed --hidden-import PyQt5.sip --clean -y --add-data "QT;QT" main.py
+
+Explanation:
+--onefile: compiles to single *.exe files
+--windowed: surpresses console
