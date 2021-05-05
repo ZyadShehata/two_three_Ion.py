@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 import matplotlib
 #matplotlib.use("Agg")
@@ -32,11 +33,11 @@ def spatial_partion(viewport_distance,slit_height,slit_width):
     
 if __name__ == "__main__":
     angle = np.arctan(1.7/5.4)
-    print "integration of dist over slit"    
-    print integrate.quad(spatial_distribution,0.5*np.pi-angle,0.5*np.pi+angle)[0]
-    print "classical partial"    
-    print 2*angle/np.pi
-    print "dipole improvement"    
-    print (integrate.quad(spatial_distribution,0.5*np.pi-angle,0.5*np.pi+angle)[0])/(2*angle/np.pi)
-    print "events per second"
-    print spatial_partion(5.4,3.4,0.2)*total_events(1.2)
+    print("integration of dist over slit")    
+    print(integrate.quad(spatial_distribution,0.5*np.pi-angle,0.5*np.pi+angle)[0])
+    print("classical partial")    
+    print(2*angle/np.pi)
+    print("dipole improvement")    
+    print((integrate.quad(spatial_distribution,0.5*np.pi-angle,0.5*np.pi+angle)[0])/(2*angle/np.pi))
+    print("events per second")
+    print(spatial_partion(5.4,3.4,0.2)*total_events(1.2))

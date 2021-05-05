@@ -5,6 +5,7 @@ Created on Wed Apr 19 12:31:11 2017
 @author: Stefan
 Debye_waller shit
 """
+from __future__ import print_function
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,7 +42,7 @@ def DW_two_complete(incoming_angle, outgoing_angle, trap_z, trap_x, trap_y, phon
     return DW_two_ca(phonon_breathing, phonon_rocking_x, phonon_rocking_y, breathing_freq, rocking_x, rocking_y, q_z, q_x, q_y)
 
 if __name__ == "__main__":
-    print 'testing debye waller module'
+    print('testing debye waller module')
     omega_z = 2.0*np.pi*750*10**3 #trap frequency along z-axis
     omega_x = 2.0*np.pi*2430*10**3 #trap frequency along x-axis
     omega_y = 2.0*np.pi*1570*10**3 #trap frequency along y-axis

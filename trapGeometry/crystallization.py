@@ -4,6 +4,7 @@ Created on Thu Mar 02 17:22:53 2017
 
 @author: Stefan
 """
+from __future__ import print_function
 #Loading of packages
 import numpy as np
 import matplotlib.pyplot as plt
@@ -45,8 +46,8 @@ def four_potential(x1,x2,x3,x4, omega):
 
 #Runtime for two Calcium Ions
 def two_ca(omega):
-    print "relaxation of two Ca ions"
-    print "trap-frequency: " + str(omega/(np.pi*2)) + "Hz"
+    print("relaxation of two Ca ions")
+    print("trap-frequency: " + str(omega/(np.pi*2)) + "Hz")
     for i in range(10000):
         random = np.random.rand()
         if potential_derivation(positions[-1][0], positions[-1][1], omega) <= 0:
@@ -56,9 +57,9 @@ def two_ca(omega):
         if potential(new_x1,positions[-1][1], omega) < potential(positions[-1][0],positions[-1][1], omega):
             positions.append([new_x1, -new_x1])
             if (np.abs(positions[-1][0]-positions[-2][0])) < residuum:
-                print "needed: " + str(i) + " Iterations!"
-                print "accepted steps: " + str(len(positions))
-                print "fraction: " + str(float(len(positions))/float(i))
+                print("needed: " + str(i) + " Iterations!")
+                print("accepted steps: " + str(len(positions)))
+                print("fraction: " + str(float(len(positions))/float(i)))
                 break
 
     plt.clf()
@@ -71,8 +72,8 @@ def two_ca(omega):
     plt.xlabel('steps')
     plt.legend(loc='best')
     plt.title('Two calcium ions')
-    print "Positions of two Ca-Ions:"
-    print positions[-1]
+    print("Positions of two Ca-Ions:")
+    print(positions[-1])
     plt.savefig('img/two_ca.png', dpi=500)
     plt.savefig('img/two_ca.pdf')    
     plt.show()
@@ -80,7 +81,7 @@ def two_ca(omega):
 
 #Runtime For Be-Ca-Be Crystal
 def one_ca_two_be(omega):
-    print "positions for Be-Ca-Be"    
+    print("positions for Be-Ca-Be")    
     positions = two_ca(omega) 
     positions2 = [[positions[0], positions[1],0]]
     #positions2 = [[0.00005, -0.00005,0]]
@@ -91,9 +92,9 @@ def one_ca_two_be(omega):
             positions2.append([new_x1, -new_x1, 0])
             if (len(positions2) > 2):
                 if (np.abs(positions2[-1][0]-positions2[-2][0])) < residuum:
-                    print "needed: " + str(i) + " Iterations!"
-                    print "accepted steps: " + str(len(positions2))
-                    print "fraction: " + str(float(len(positions2))/float(i))
+                    print("needed: " + str(i) + " Iterations!")
+                    print("accepted steps: " + str(len(positions2)))
+                    print("fraction: " + str(float(len(positions2))/float(i)))
                     break
                 
     plt.clf()
@@ -107,15 +108,15 @@ def one_ca_two_be(omega):
     plt.xlabel('steps')
     plt.legend(loc='best')
     plt.title('Two Beryllium, one Calcium ion')
-    print "Positions of two Be-Ions and one Ca-Ion:"
-    print positions2[-1]
+    print("Positions of two Be-Ions and one Ca-Ion:")
+    print(positions2[-1])
     plt.savefig('img/two_be_one_ca.png', dpi=300)
     plt.show()
     return positions2[-1]
     
 #Runtime for Ca-Be-ca Crystal
 def one_be_two_ca(omega):
-    print "positions for Ca-Be-Ca"    
+    print("positions for Ca-Be-Ca")    
     positions = two_ca(omega) 
     positions2 = [[positions[0], positions[1],0]]
     #positions2 = [[0.00005, -0.00005,0]]
@@ -126,9 +127,9 @@ def one_be_two_ca(omega):
             positions2.append([new_x1, -new_x1, 0])
             if (len(positions2) > 2):
                 if (np.abs(positions2[-1][0]-positions2[-2][0])) < residuum:
-                    print "needed: " + str(i) + " Iterations!"
-                    print "accepted steps: " + str(len(positions2))
-                    print "fraction: " + str(float(len(positions2))/float(i))
+                    print("needed: " + str(i) + " Iterations!")
+                    print("accepted steps: " + str(len(positions2)))
+                    print("fraction: " + str(float(len(positions2))/float(i)))
                     break
                 
     plt.clf()
@@ -142,8 +143,8 @@ def one_be_two_ca(omega):
     plt.xlabel('steps')
     plt.legend(loc='best')
     plt.title('Two Calcium, one Beryllium ions')
-    print "Positions of two Ca-Ions and one Be-Ion:"
-    print positions2[-1]
+    print("Positions of two Ca-Ions and one Be-Ion:")
+    print(positions2[-1])
     plt.savefig('img/two_ca_one_be.png', dpi=300)
     plt.show()
     return positions2[-1]
@@ -152,7 +153,7 @@ def one_be_two_ca(omega):
 def two_ca_two_be(omega):
     positions = two_ca(omega)
     positions3 = [[2*positions[0], 2*positions[1], positions[0], positions[1]]]
-    print "Be-Ca-Ca-Be"    
+    print("Be-Ca-Ca-Be")    
     #positions3 = [[0.0001,0.00005, -0.00005,-0.0001]]
     for i in range(5000000):
         random = np.random.rand()
@@ -165,12 +166,12 @@ def two_ca_two_be(omega):
                 positions3.append([new_x1, -new_x1, positions3[-1][2], positions3[-1][3]])
         if (len(positions3) > 2):
             if ((np.abs(positions3[-1][0]-positions3[-2][0])) < 0.5*residuum) & ((np.abs(positions3[-1][2]-positions3[-2][2])) < 0.5*residuum):
-                print "needed: " + str(i) + " Iterations!"
-                print "accepted steps: " + str(len(positions3))
-                print "fraction: " + str(float(len(positions3))/float(i))
+                print("needed: " + str(i) + " Iterations!")
+                print("accepted steps: " + str(len(positions3)))
+                print("fraction: " + str(float(len(positions3))/float(i)))
                 break
     
-    print "accepted steps: " + str(len(positions3))        
+    print("accepted steps: " + str(len(positions3)))        
     plt.clf()
     plt.plot(range(len(positions3)),np.array(positions3).T[2], color="b", label='Calcium 1')
     plt.plot(range(len(positions3)),np.array(positions3).T[3], color="b", label='Calcium 2')
@@ -183,7 +184,7 @@ def two_ca_two_be(omega):
     plt.xlabel('steps')
     plt.legend(loc='best')
     plt.title('Two Beryllium, Two Calcium ions')
-    print "Positions of two Ca-Ions and Two Beryllium Ions:"
-    print positions3[-1]
+    print("Positions of two Ca-Ions and Two Beryllium Ions:")
+    print(positions3[-1])
     plt.savefig('img/two_ne_two_ca.png', dpi=300)
     plt.show()

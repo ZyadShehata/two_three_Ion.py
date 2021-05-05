@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 
 import harmonic_distribution as hd
@@ -48,31 +49,31 @@ significance = 5 #in sigmas for poissonian threshhold
 threshhold = 100 # arbitrary threshhold, counts ions in bins
 
 #Script doing stuff
-print "Total Quantum Efficiency"
-print str(quantum_efficiency)
-print "Estimated Debye-Waller-Factor"
-print str(debye_waller)
-print "Expected g^2 T=0:"
+print("Total Quantum Efficiency")
+print(str(quantum_efficiency))
+print("Estimated Debye-Waller-Factor")
+print(str(debye_waller))
+print("Expected g^2 T=0:")
 exp_gtwo = cont.total_contrast(bin_number,saturation_param,center_angle, beam_angle,slit_width,ion_distance,debye_waller)
-print exp_gtwo
-print "Visibility of g^2"
-print str((2*saturation_param*debye_waller)/(saturation_param**2 + debye_waller**2))
-print "Events per Second in whole spatial regime"
-print sp.total_events(saturation_param)
-print "Events per second on slit"
-print sp.spatial_partion(viewport_distance,slit_height,float(slit_width)/10)*sp.total_events(saturation_param)
-print "fraction of events in promille"
-print (sp.spatial_partion(viewport_distance,slit_height,float(slit_width)/10)*sp.total_events(saturation_param))/sp.total_events(saturation_param)*1000
-print "measured counts per second with losses"
+print(exp_gtwo)
+print("Visibility of g^2")
+print(str((2*saturation_param*debye_waller)/(saturation_param**2 + debye_waller**2)))
+print("Events per Second in whole spatial regime")
+print(sp.total_events(saturation_param))
+print("Events per second on slit")
+print(sp.spatial_partion(viewport_distance,slit_height,float(slit_width)/10)*sp.total_events(saturation_param))
+print("fraction of events in promille")
+print((sp.spatial_partion(viewport_distance,slit_height,float(slit_width)/10)*sp.total_events(saturation_param))/sp.total_events(saturation_param)*1000)
+print("measured counts per second with losses")
 per_second_losses = sp.spatial_partion(viewport_distance,slit_height,float(slit_width)/10)*sp.total_events(saturation_param)*quantum_efficiency
-print per_second_losses
+print(per_second_losses)
 #print "number of bins between two photon events"
 bins_per_interphotontime = (1/per_second_losses)/((coherence_time)/(bin_number))
 #print bins_per_interphotontime
-print "measurement time for arbitrary threshhold in hours (Threshhold: "+ str(threshhold) +")"
-print (1./3600)*threshhold*((coherence_time**2)*(1/((coherence_time/bin_number)*(cont.poissonian(coherence_time*per_second_losses,2)))))
-print "measurementtime limted by poissonian noise in hours (Threshhold: "+ str((((exp_gtwo)*significance**2)/((exp_gtwo-1)**2))) +", significance: "+ str(significance) + " sigma)"
-print (1./3600)*(((exp_gtwo)*significance**2)/((exp_gtwo-1)**2))*((coherence_time**2)*(1/((coherence_time/bin_number)*(cont.poissonian(coherence_time*per_second_losses,2)))))
+print("measurement time for arbitrary threshhold in hours (Threshhold: "+ str(threshhold) +")")
+print((1./3600)*threshhold*((coherence_time**2)*(1/((coherence_time/bin_number)*(cont.poissonian(coherence_time*per_second_losses,2))))))
+print("measurementtime limted by poissonian noise in hours (Threshhold: "+ str((((exp_gtwo)*significance**2)/((exp_gtwo-1)**2))) +", significance: "+ str(significance) + " sigma)")
+print((1./3600)*(((exp_gtwo)*significance**2)/((exp_gtwo-1)**2))*((coherence_time**2)*(1/((coherence_time/bin_number)*(cont.poissonian(coherence_time*per_second_losses,2))))))
 #visualization
 img = Image.open('trap.png')
 plt.grid(False)
