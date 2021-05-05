@@ -92,9 +92,9 @@ lensFNumber = 1.6
 numericalAperture = 1/(2*lensFNumber)
 abbeResolution = 397e-9/(2*numericalAperture)
 
-histos = np.load("AllDAta.bin.npy")
-gOne = np.load("alldataG1.npy")
-gOneTot = np.load("GOneTot.npy")
+histos = np.load("../data/AllDAta.bin.npy")
+gOne = np.load("../data/alldataG1.npy")
+gOneTot = np.load("../data/GOneTot.npy")
 
 imagBinnedMaster, imagBinnedSlave = gOne
 totaloBinned = np.add(imagBinnedSlave[1], imagBinnedMaster[1])
