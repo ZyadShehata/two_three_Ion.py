@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Mar 02 17:22:53 2017
-
-@author: Stefan
-"""
 from __future__ import print_function
 #Loading of packages
 import numpy as np
@@ -18,7 +12,7 @@ residuum = 1*10**-9
 Epsilon = 8.854187817*10**-12
 Q = 1.6021766208*10**-19
 M = 6.642*10**-26
-M_Be = 1.496508187*10**-26
+M_Be = 6.642*10**-26
 
 
 #Auxilliary functions
@@ -30,23 +24,23 @@ def potential(x1, x2, omega):
 def potential_derivation(x1, x2, omega):
     return 0.5*M*(omega**2.0)*(2.0*x1 + x2**2.0)-(Q**2.0/(4.0*np.pi*Epsilon))*(1.0/(x1-x2)**2)
 
-#x1 and x2 are Be, x3 is Ca
+#x1 and x2 are Ca, x3 is Ca
 def three_potential(x1,x2,x3, omega):
     return 0.5*M_Be*(omega**2.0)*(x1**2.0 + x2**2.0)+0.5*M*(omega**2.0)*(x3**2.0)+(Q**2.0/(4.0*np.pi*Epsilon))*((1.0/(np.abs(x1-x2)))+(1.0/(np.abs(x1-x3)))+(1.0/(np.abs(x2-x3))))
 
-#x1 and x2 are Ca, x3 is Be
+#x1 and x2 are Ca, x3 is Ca
 def three_potential_two(x1,x2,x3, omega):
     return 0.5*M*(omega**2.0)*(x1**2.0 + x2**2.0)+0.5*M_Be*(omega**2.0)*(x3**2.0)+(Q**2.0/(4.0*np.pi*Epsilon))*((1.0/(np.abs(x1-x2)))+(1.0/(np.abs(x1-x3)))+(1.0/(np.abs(x2-x3))))
 
-#x1 and x2 are Be, x3 and x4 are Ca
+#x1 and x2 are Ca, x3 and x4 are Ca
 def four_potential(x1,x2,x3,x4, omega):
     return 0.5*M_Be*(omega**2.0)*(x1**2.0 + x2**2.0)+0.5*M*(omega**2.0)*(x3**2.0 + x4**2)+(Q**2.0/(4.0*np.pi*Epsilon))*((1.0/(np.abs(x1-x2)))+(1.0/(np.abs(x1-x3)))+(1.0/(np.abs(x2-x3)))+(1.0/(np.abs(x1-x4)))+(1.0/(np.abs(x2-x4)))+(1.0/(np.abs(x3-x4))))
 
 #main runtime
 
-#Runtime for two Calcium Ions
-def two_ca(omega):
-    print("relaxation of two Ca ions")
+#Runtime for three Calcium Ions
+def three_ca(omega):
+    print("relaxation of three Ca ions")
     print("trap-frequency: " + str(omega/(np.pi*2)) + "Hz")
     for i in range(10000):
         random = np.random.rand()
@@ -65,24 +59,26 @@ def two_ca(omega):
     plt.clf()
     plt.plot(range(len(positions)),np.array(positions).T[0], color="b", label='calcium 1')
     plt.plot(range(len(positions)),np.array(positions).T[1], color="b", label='calcium 2')
+    plt.plot(range(len(positions)),np.zeros(len(positions)), color="b", label='Calcium 3')
+
     props = dict(boxstyle='square', facecolor='white', alpha=0.5)
     text = (r'Calcium: ' + str(positions[-1][0]) + "\n")
     plt.text(5, -0.00001, text, None, bbox=props, fontsize=12)
     plt.ylabel(r'position in $[\mu m]$')
     plt.xlabel('steps')
     plt.legend(loc='best')
-    plt.title('Two calcium ions')
-    print("Positions of two Ca-Ions:")
+    plt.title('Three calcium ions')
+    print("Positions of Three Ca-Ions:")
     print(positions[-1])
     plt.savefig('img/two_ca.png', dpi=500)
-    plt.savefig('img/two_ca.pdf')    
+    plt.savefig('img/two_ca.pdf')
     plt.show()
     return positions[-1]
 
 #Runtime For Be-Ca-Be Crystal
 def one_ca_two_be(omega):
     print("positions for Be-Ca-Be")    
-    positions = two_ca(omega) 
+    positions = three_ca(omega)
     positions2 = [[positions[0], positions[1],0]]
     #positions2 = [[0.00005, -0.00005,0]]
     for i in range(50000000):
@@ -98,7 +94,7 @@ def one_ca_two_be(omega):
                     break
                 
     plt.clf()
-    plt.plot(range(len(positions2)),np.zeros(len(positions2)), color="b", label='Berrylium')
+    plt.plot(range(len(positions2)),np.zeros(len(positions2)), color="b", label='Calcium 3')
     plt.plot(range(len(positions2)),np.array(positions2).T[0], color="r", label='Calcium 1')
     plt.plot(range(len(positions2)),np.array(positions2).T[1], color="r", label='Calcium 2')
     props = dict(boxstyle='square', facecolor='white', alpha=0.5)
@@ -117,7 +113,7 @@ def one_ca_two_be(omega):
 #Runtime for Ca-Be-ca Crystal
 def one_be_two_ca(omega):
     print("positions for Ca-Be-Ca")    
-    positions = two_ca(omega) 
+    positions = three_ca(omega)
     positions2 = [[positions[0], positions[1],0]]
     #positions2 = [[0.00005, -0.00005,0]]
     for i in range(500000):
@@ -133,9 +129,9 @@ def one_be_two_ca(omega):
                     break
                 
     plt.clf()
-    plt.plot(range(len(positions2)),np.zeros(len(positions2)), color="b", label='Calcium')
-    plt.plot(range(len(positions2)),np.array(positions2).T[0], color="r", label='Beryllium 1')
-    plt.plot(range(len(positions2)),np.array(positions2).T[1], color="r", label='Beryllium 2')
+    plt.plot(range(len(positions2)),np.zeros(len(positions2)), color="b", label='Calcium 1')
+    plt.plot(range(len(positions2)),np.array(positions2).T[0], color="r", label='Calcium 3')
+    plt.plot(range(len(positions2)),np.array(positions2).T[1], color="r", label='Calcium 2')
     props = dict(boxstyle='square', facecolor='white', alpha=0.5)
     text = (r'Berillium: ' + '0' + "\n" + 'Calcium: ' + str(positions2[-1][0]))
     plt.text(3, -0.000003, text, None, bbox=props, fontsize=12)
@@ -150,7 +146,7 @@ def one_be_two_ca(omega):
     return positions2[-1]
 
 #Runtime for Be-Ca-Ca-Be Crystal
-def two_ca_two_be(omega):
+'''def two_ca_two_be(omega):
     positions = two_ca(omega)
     positions3 = [[2*positions[0], 2*positions[1], positions[0], positions[1]]]
     print("Be-Ca-Ca-Be")    
@@ -187,4 +183,4 @@ def two_ca_two_be(omega):
     print("Positions of two Ca-Ions and Two Beryllium Ions:")
     print(positions3[-1])
     plt.savefig('img/two_ne_two_ca.png', dpi=300)
-    plt.show()
+    plt.show() '''

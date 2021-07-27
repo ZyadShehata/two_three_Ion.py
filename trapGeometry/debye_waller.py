@@ -1,8 +1,13 @@
+from __future__ import print_function
+
 import numpy as np
 import matplotlib.pyplot as plt
 
+#Definition of stuff
 hbar = 1.054571800e-34
-M_Ca = 6.642*10**-26
+M = 6.642*10**-26
+M_Be = 1.496508187*10**-26
+
 
 #Auxilliary Functions
 def DW_part(phonons, pulse_vec, mode_freq):
